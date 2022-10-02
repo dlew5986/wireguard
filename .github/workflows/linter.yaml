@@ -1,0 +1,19 @@
+name: linter
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  packer_linter:
+    runs-on: ubuntu-latest
+    name: packer linter
+
+    steps:
+      - name: checkout repo
+      - uses: actions/checkout@v2
+
+      - name: packer version
+        run: packer --version
+
+      - name: packer linter
+        run: packer fmt -check -diff -recursive .
+        working-directory: ./packer
