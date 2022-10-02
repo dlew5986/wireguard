@@ -1,0 +1,32 @@
+name: build
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: build
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+
+      - name: config aws creds
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+
+      - name: packer init
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: init
+          working_directory: packer
+
+      - name: packer validate
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: validate
+          working_directory: packer
