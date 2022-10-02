@@ -1,5 +1,5 @@
 build {
-  sources = ["source.amazon-ebs.wireguard"]
+  sources    =      ["source.amazon-ebs.wireguard"]
 
   provisioner "shell" {
     inline = [
