@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - name: checkout repo
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
 
       - name: packer version
         run: packer --version
