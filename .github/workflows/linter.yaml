@@ -1,6 +1,6 @@
 name: linter
 
-on: [pull_request, workflow_dispatch]
+on: [pull_request]
 
 jobs:
   packer_linter:
