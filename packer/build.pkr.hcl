@@ -9,7 +9,21 @@ build {
   }
 
   # install aws cli v2
+  provisioner "shell" {
+    inline = [
+      "aws --version"
+    ]
+  }
+
+  # install powershell
+
   # install aws ssm agent
+  provisioner "shell" {
+    inline = [
+      "yum info amazon-ssm-agent"
+    ]
+  }
+
   # install aws cloudwatch agent
 
 }
