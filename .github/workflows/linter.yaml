@@ -11,9 +11,8 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v2
 
-      - name: packer version
-        run: packer --version
-
       - name: packer linter
-        run: packer fmt -check -diff -recursive .
+        run: |
+          packer --version
+          packer fmt -check -diff -recursive .
         working-directory: ./packer
