@@ -6,13 +6,23 @@ jobs:
   packer_linter:
     runs-on: ubuntu-latest
     name: packer linter
-
     steps:
       - name: checkout repo
         uses: actions/checkout@v3
-
       - name: packer linter
         run: |
           packer --version
           packer fmt -check -diff -recursive .
         working-directory: ./packer
+
+  terraform_linter:
+    runs-on: ubuntu-latest
+    name: terraform linter
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v3
+      - name: terraform linter
+        run: |
+          terraform --version
+          terraform fmt -check -diff -recursive .
+        working-directory: ./terraform
