@@ -1,6 +1,6 @@
 data "aws_ami" "source_ami" {
   most_recent = true
-  owners      = ["self"]
+  owners  = ["self"]
   filter {
     name   = "name"
     values = [local.ami_regex]
@@ -12,7 +12,7 @@ data "aws_key_pair" "key_pair" {
 }
 
 resource "aws_instance" "wireguard" {
-  ami                         = data.aws_ami.source_ami.id
+ami             = data.aws_ami.source_ami.id
   instance_type               = local.instance_type
   key_name                    = data.aws_key_pair.key_pair.key_name
   iam_instance_profile        = aws_iam_instance_profile.session_manager.name
