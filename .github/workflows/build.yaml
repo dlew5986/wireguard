@@ -19,20 +19,12 @@ jobs:
           aws-region: us-east-2
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
 
-      - name: packer init
-        uses: hashicorp/packer-github-actions@master
-        with:
-          command: init
-          working_directory: packer
-
-      - name: packer validate
-        uses: hashicorp/packer-github-actions@master
-        with:
-          command: validate
-          working_directory: packer
-
       - name: packer build
-        uses: hashicorp/packer-github-actions@master
-        with:
-          command: build
-          working_directory: packer
+        run: |
+          packer --version
+          packer init .
+          packer validate .
+          packer build .
+        working-directory: ./packer
+        env:
+          PACKER_LOG: 0
