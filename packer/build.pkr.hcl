@@ -29,6 +29,19 @@ build {
     ]
   }
 
+  # # install aws.tools.installer module
+  # provisioner "powershell" {
+  #   #use_pwsh = true
+  #   #elevated_user = root
+  #   inline = [
+  #     "whoami",
+  #     "Get-Module -ListAvailable",
+  #     #"Get-PSRepository -Name PSGallery | Set-PSRepository -InstallationPolicy Trusted",
+  #     #"Install-Module -Name AWS.Tools.Installer -Scope AllUsers",
+  #     #"Get-Module -ListAvailable"
+  #   ]
+  # }
+
   # install aws ssm agent
   provisioner "shell" {
     inline = [
