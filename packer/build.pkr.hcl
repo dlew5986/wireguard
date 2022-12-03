@@ -4,7 +4,7 @@ build {
   provisioner "shell" {
     inline = [
       "sudo yum update -y",
-      "sudo yum install nmap -y"
+      "sudo yum install -y nmap"
     ]
   }
 
@@ -12,7 +12,7 @@ build {
   # install aws cli v2
   provisioner "shell" {
     inline = [
-      "sudo yum remove awscli -y",
+      "sudo yum remove -y awscli",
       "curl \"https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip\" -o \"awscliv2.zip\"",
       "unzip -q awscliv2.zip",
       "sudo ./aws/install"
@@ -20,6 +20,12 @@ build {
   }
 
   # install powershell
+  provisioner "shell" {
+    inline = [
+      "curl \"https://packages.microsoft.com/config/rhel/7/prod.repo\" | sudo tee /etc/yum.repos.d/microsoft.repo",
+      "sudo yum install -y powershell"
+    ]
+  }
 
   # install aws ssm agent
   provisioner "shell" {
