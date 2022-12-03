@@ -8,7 +8,7 @@ packer {
 }
 
 source "amazon-ebs" "wireguard" {
-  ami_name      = "wireguard_{{timestamp}}"
+  ami_name      = local.ami_name
   instance_type = "t2.micro"
   region        = "us-east-2"
 
