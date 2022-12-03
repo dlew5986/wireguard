@@ -15,7 +15,7 @@ resource "aws_iam_role" "wireguard" {
 
 resource "aws_iam_instance_profile" "wireguard" {
   name = local.session_manager_instance_profile_name
-  role = aws_iam_role.session_manager.name
+  role = aws_iam_role.wireguard.name
 }
 
 data "aws_iam_policy" "ssm_agent" {
@@ -23,7 +23,7 @@ data "aws_iam_policy" "ssm_agent" {
 }
 
 resource "aws_iam_role_policy_attachment" "ssm_agent" {
-  role       = aws_iam_role.session_manager.name
+  role       = aws_iam_role.wireguard.name
   policy_arn = data.aws_iam_policy.ssm_agent.arn
 }
 
@@ -32,6 +32,6 @@ data "aws_iam_policy" "cloudwatch_agent" {
 }
 
 resource "aws_iam_role_policy_attachment" "cloudwatch_agent" {
-  role       = aws_iam_role.session_manager.name
+  role       = aws_iam_role.wireguard.name
   policy_arn = data.aws_iam_policy.cloudwatch_agent.arn
 }

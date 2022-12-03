@@ -7,17 +7,16 @@ data "aws_ami" "source_ami" {
   }
 }
 
-data "aws_key_pair" "key_pair" {
+data "aws_key_pair" "wireguard" {
   key_name = local.key_pair_name
 }
 
 resource "aws_instance" "wireguard" {
-  ami                         = data.aws_ami.source_ami.id
-  instance_type               = local.instance_type
-  key_name                    = data.aws_key_pair.key_pair.key_name
-  iam_instance_profile        = aws_iam_instance_profile.session_manager.name
-  associate_public_ip_address = false
-  vpc_security_group_ids      = [aws_security_group.security_group.id]
+  ami                    = data.aws_ami.source_ami.id
+  instance_type          = local.instance_type
+  key_name               = data.aws_key_pair.wireguard.key_name
+  iam_instance_profile   = aws_iam_instance_profile.wireguard.name
+  vpc_security_group_ids = [aws_security_group.wireguard.id]
 
   root_block_device {
     delete_on_termination = true
@@ -25,4 +24,6 @@ resource "aws_instance" "wireguard" {
     volume_type           = "gp3"
   }
 
+  tags        = local.instance_tags
+  volume_tags = local.instance_tags
 }
