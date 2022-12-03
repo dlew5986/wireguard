@@ -6,9 +6,13 @@ locals {
   session_manager_role_name             = "wireguard"
   session_manager_instance_profile_name = "wireguard"
 
-  tags = {
-    Name    = "wireguard"
-    Project = "wireguard_ami"
+  default_tags = {
+    Name = "wireguard"
+  }
+
+  instance_tags = {
+    source_ami_id   = data.aws_ami.source_ami.id
+    source_ami_name = data.aws_ami.source_ami.name
   }
 
 }
