@@ -1,6 +1,8 @@
 build {
   sources = ["source.amazon-ebs.wireguard"]
 
+  # patch
+  # install nmap
   provisioner "shell" {
     inline = [
       "sudo yum update -y",
@@ -30,10 +32,15 @@ build {
   # install aws ssm agent
   provisioner "shell" {
     inline = [
-      "yum info amazon-ssm-agent"
+      "yum info amazon-ssm-agent" # already baked into aws linux 2
     ]
   }
 
   # install aws cloudwatch agent
+  provisioner "shell" {
+    inline = [
+      "sudo yum install -y amazon-cloudwatch-agent"
+    ]
+  }
 
 }
