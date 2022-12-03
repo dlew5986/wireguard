@@ -1,6 +1,7 @@
 locals {
   tags = {
-    Name    = "wireguard_{{timestamp}}"
-    Project = "wireguard_ami"
+    Name          = "wireguard_{{isotime}}"
+    Project       = "wireguard_ami"
+    source_ami_id = "?"
   }
 }
