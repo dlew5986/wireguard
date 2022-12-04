@@ -1,4 +1,5 @@
-name: build
+name: build ami
+run-name: build ami from branch ${{ github.ref_name }}
 
 on: workflow_dispatch
 
