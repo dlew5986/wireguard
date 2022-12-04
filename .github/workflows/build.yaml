@@ -1,7 +1,17 @@
 name: build ami
 run-name: build ami from branch ${{ github.ref_name }}
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      packer_log:
+        description: PACKER_LOG
+        type: choice
+        default: 0
+        required: true
+        options:
+          - 0
+          - 1
 
 jobs:
   build:
@@ -28,4 +38,4 @@ jobs:
           packer build .
         working-directory: ./packer
         env:
-          PACKER_LOG: 0
+          PACKER_LOG: ${{ github.event.inputs.packer_log }}
