@@ -25,5 +25,12 @@ resource "aws_instance" "wireguard" {
   }
 
   tags        = local.instance_tags
-  volume_tags = local.instance_tags
+  volume_tags = merge(local.default_tags, local.instance_tags)
+}
+
+resource "aws_ec2_tag" "eni" {
+  resource_id = aws_instance.wireguard.primary_network_interface_id
+  for_each    = merge(local.default_tags, local.instance_tags)
+  key         = each.key
+  value       = each.value
 }
