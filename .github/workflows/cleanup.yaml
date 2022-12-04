@@ -2,12 +2,6 @@ name: cleanup
 
 on: 
   workflow_dispatch:
-    inputs:
-      dry_run:
-        type: boolean
-        default: false
-        description: 'dry run'
-        required: true
 
 jobs:
   cleanup_workflow_logs:
@@ -19,10 +13,9 @@ jobs:
         with:
           token: ${{ github.token }}
           repository: ${{ github.repository }}
-          delete_workflow_pattern: build ami
           retain_days: 0
-          keep_minimum_runs: 4
-          dry_run: ${{ github.event.inputs.dry_run }}
+          keep_minimum_runs: 10
+
       - name: cleanup workflow logs of 'linter'
         uses: Mattraks/delete-workflow-runs@v2
         with:
@@ -30,8 +23,8 @@ jobs:
           repository: ${{ github.repository }}
           delete_workflow_pattern: linter
           retain_days: 0
-          keep_minimum_runs: 4
-          dry_run: ${{ github.event.inputs.dry_run }}
+          keep_minimum_runs: 10
+
       - name: cleanup workflow logs of 'cleanup'
         uses: Mattraks/delete-workflow-runs@v2
         with:
@@ -39,5 +32,4 @@ jobs:
           repository: ${{ github.repository }}
           delete_workflow_pattern: cleanup
           retain_days: 0
-          keep_minimum_runs: 4
-          dry_run: ${{ github.event.inputs.dry_run }}
+          keep_minimum_runs: 10
