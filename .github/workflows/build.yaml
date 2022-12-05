@@ -39,3 +39,5 @@ jobs:
         working-directory: ./packer
         env:
           PACKER_LOG: ${{ github.event.inputs.packer_log }}
+          PKR_VAR_github_branch: ${{ github.ref_name }}
+          PKR_VAR_github_repo: ${{ github.repository }}
