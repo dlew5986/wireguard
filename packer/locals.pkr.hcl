@@ -4,10 +4,11 @@ locals {
 
   tags = {
     Name            = local.ami_name
+    created_by      = "packer"
+    github_branch   = var.github_branch
+    github_repo     = var.github_repo
     packer_version  = "{{ packer_version }}"
     source_ami_id   = "{{ .SourceAMI }}"
     source_ami_name = "{{ .SourceAMIName }}"
-    github_branch   = var.github_branch
-    github_repo     = var.github_repo
   }
 }
