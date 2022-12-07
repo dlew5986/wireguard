@@ -1,6 +1,7 @@
+---
 name: linter
 
-on: [pull_request, workflow_dispatch]
+on: [pull_request, workflow_dispatch]    # yamllint disable-line rule:truthy
 
 jobs:
   packer_linter:
@@ -26,3 +27,15 @@ jobs:
           terraform --version
           terraform fmt -check -diff -recursive .
         working-directory: ./terraform
+
+  yaml_linter:
+    runs-on: ubuntu-latest
+    name: yaml linter
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v3
+      - name: yaml linter
+        run: |
+          yamllint --version
+          yamllint --strict .
+        working-directory: ./.github/workflows

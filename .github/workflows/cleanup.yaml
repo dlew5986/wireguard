@@ -1,6 +1,7 @@
+---
 name: cleanup
 
-on: workflow_dispatch
+on: workflow_dispatch    # yamllint disable-line rule:truthy
 
 jobs:
   cleanup_workflow_logs:
