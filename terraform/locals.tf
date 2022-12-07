@@ -7,7 +7,8 @@ locals {
   session_manager_instance_profile_name = "wireguard"
 
   default_tags = {
-    Name = "wireguard"
+    Name       = "wireguard"
+    created_by = "terraform"
   }
 
   instance_tags = {
