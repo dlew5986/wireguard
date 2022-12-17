@@ -15,7 +15,7 @@ on:    # yamllint disable-line rule:truthy
           - 1
 
 jobs:
-  build:
+  build_ami:
     runs-on: ubuntu-latest
     name: build
 
