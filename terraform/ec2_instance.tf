@@ -1,16 +1,3 @@
-data "aws_ami" "source_ami" {
-  most_recent = true
-  owners      = ["self"]
-  filter {
-    name   = "name"
-    values = [local.ami_regex]
-  }
-}
-
-data "aws_key_pair" "wireguard" {
-  key_name = local.key_pair_name
-}
-
 resource "aws_instance" "wireguard" {
   ami                    = data.aws_ami.source_ami.id
   instance_type          = local.instance_type

@@ -1,7 +1,3 @@
-data "aws_vpc" "vpc_default" {
-  default = true
-}
-
 resource "aws_security_group" "wireguard" {
   name   = local.security_group_name
   vpc_id = data.aws_vpc.vpc_default.id

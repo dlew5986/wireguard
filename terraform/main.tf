@@ -6,13 +6,6 @@ terraform {
     key            = "wireguard/terraform.tfstate"
     region         = "us-east-2"
   }
-
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.0"
-    }
-  }
 }
 
 provider "aws" {
@@ -22,5 +15,21 @@ provider "aws" {
   default_tags {
     tags = local.default_tags
   }
+}
 
+data "aws_ami" "source_ami" {
+  most_recent = true
+  owners      = ["self"]
+  filter {
+    name   = "name"
+    values = [local.ami_regex]
+  }
+}
+
+data "aws_key_pair" "wireguard" {
+  key_name = local.key_pair_name
+}
+
+data "aws_vpc" "vpc_default" {
+  default = true
 }
