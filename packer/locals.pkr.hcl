@@ -1,6 +1,7 @@
 locals {
 
-  ami_name = "wireguard_${formatdate("YYYY-MM-DD'T'hh-mm-ss'Z'", timestamp())}"
+  timestamp = regex_replace(timestamp(), "[: ]", "-")
+  ami_name  = "wireguard_${local.timestamp}"
 
   tags = {
     Name            = local.ami_name
