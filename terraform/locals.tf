@@ -1,6 +1,6 @@
 locals {
   ami_regex                             = "wireguard_*"
-  instance_type                         = "t2.micro"
+  instance_type                         = "t3.micro"
   key_pair_name                         = "wireguard"
   security_group_name                   = "wireguard"
   session_manager_role_name             = "wireguard"
@@ -15,5 +15,4 @@ locals {
     source_ami_id   = data.aws_ami.source_ami.id
     source_ami_name = data.aws_ami.source_ami.name
   }
-
 }
