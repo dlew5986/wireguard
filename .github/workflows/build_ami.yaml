@@ -8,8 +8,6 @@ on:    # yamllint disable-line rule:truthy
       packer_log:
         description: PACKER_LOG
         type: choice
-        default: 0
-        required: true
         options:
           - 0
           - 1
@@ -39,6 +37,7 @@ jobs:
           packer build .
         working-directory: ./packer
         env:
+          PACKER_GITHUB_API_TOKEN: ${{ github.token }}
           PACKER_LOG: ${{ github.event.inputs.packer_log }}
           PKR_VAR_github_branch: ${{ github.ref_name }}
           PKR_VAR_github_repo: ${{ github.repository }}

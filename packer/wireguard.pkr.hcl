@@ -7,6 +7,29 @@ packer {
   }
 }
 
+variable "github_branch" {
+  type = string
+}
+
+variable "github_repo" {
+  type = string
+}
+
+locals {
+  timestamp = regex_replace(timestamp(), "[: ]", "-")
+  ami_name  = "wireguard_${local.timestamp}"
+
+  tags = {
+    Name            = local.ami_name
+    created_by      = "packer"
+    github_branch   = var.github_branch
+    github_repo     = var.github_repo
+    packer_version  = "{{ packer_version }}"
+    source_ami_id   = "{{ .SourceAMI }}"
+    source_ami_name = "{{ .SourceAMIName }}"
+  }
+}
+
 source "amazon-ebs" "wireguard" {
   ami_name      = local.ami_name
   instance_type = "t2.micro"
@@ -35,4 +58,12 @@ source "amazon-ebs" "wireguard" {
   run_volume_tags = local.tags
   snapshot_tags   = local.tags
 
+}
+
+build {
+  sources = ["source.amazon-ebs.wireguard"]
+
+  provisioner "shell" {
+    script = "./provision.sh"
+  }
 }
