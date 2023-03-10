@@ -1,6 +1,6 @@
 ---
 name: build ami
-run-name: build ami from branch ${{ github.ref_name }}
+run-name: "build ami: ${{ github.ref_name }}"
 
 on:    # yamllint disable-line rule:truthy
   workflow_dispatch:
