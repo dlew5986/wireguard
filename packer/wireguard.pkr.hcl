@@ -15,6 +15,10 @@ variable "github_repo" {
   type = string
 }
 
+variable "skip_create_ami" {
+  type = bool
+}
+
 locals {
   timestamp = regex_replace(timestamp(), "[: ]", "-")
   ami_name  = "wireguard_${local.timestamp}"
@@ -36,6 +40,8 @@ source "amazon-ebs" "wireguard" {
   region        = "us-east-2"
 
   temporary_security_group_source_public_ip = true
+
+  skip_create_ami = var.skip_create_ami
 
   communicator = "ssh"
   ssh_username = "ec2-user"
