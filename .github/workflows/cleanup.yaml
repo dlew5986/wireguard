@@ -16,6 +16,7 @@ jobs:
           delete_workflow_pattern: build ami
           retain_days: 0
           keep_minimum_runs: 10
+
       - name: cleanup workflow logs of 'linter'
         uses: Mattraks/delete-workflow-runs@v2
         with:
@@ -24,6 +25,7 @@ jobs:
           delete_workflow_pattern: linter
           retain_days: 0
           keep_minimum_runs: 10
+
       - name: cleanup workflow logs of 'cleanup'
         uses: Mattraks/delete-workflow-runs@v2
         with:
