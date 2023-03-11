@@ -31,6 +31,9 @@ jobs:
           aws-region: us-east-2
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
 
+      - name: verify aws session manager plugin
+        run: session-manager-plugin --version
+
       - name: packer build
         run: |
           packer --version
