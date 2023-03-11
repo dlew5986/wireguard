@@ -1,7 +1,7 @@
 ---
 name: cleanup
 
-on: workflow_dispatch    # yamllint disable-line rule:truthy
+on: workflow_dispatch
 
 jobs:
   cleanup_workflow_logs:
@@ -11,26 +11,26 @@ jobs:
       - name: cleanup workflow logs of 'build'
         uses: Mattraks/delete-workflow-runs@v2
         with:
-          token: ${{ github.token }}
-          repository: ${{ github.repository }}
+          token:                   ${{ github.token }}
+          repository:              ${{ github.repository }}
           delete_workflow_pattern: build ami
-          retain_days: 0
-          keep_minimum_runs: 10
+          retain_days:             0
+          keep_minimum_runs:       10
 
       - name: cleanup workflow logs of 'linter'
         uses: Mattraks/delete-workflow-runs@v2
         with:
-          token: ${{ github.token }}
-          repository: ${{ github.repository }}
+          token:                   ${{ github.token }}
+          repository:              ${{ github.repository }}
           delete_workflow_pattern: linter
-          retain_days: 0
-          keep_minimum_runs: 10
+          retain_days:             0
+          keep_minimum_runs:       10
 
       - name: cleanup workflow logs of 'cleanup'
         uses: Mattraks/delete-workflow-runs@v2
         with:
-          token: ${{ github.token }}
-          repository: ${{ github.repository }}
+          token:                   ${{ github.token }}
+          repository:              ${{ github.repository }}
           delete_workflow_pattern: cleanup
-          retain_days: 0
-          keep_minimum_runs: 10
+          retain_days:             0
+          keep_minimum_runs:       10

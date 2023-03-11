@@ -2,7 +2,7 @@
 name: build ami
 run-name: "build ami: ${{ github.ref_name }}"
 
-on:    # yamllint disable-line rule:truthy
+on:
   workflow_dispatch:
     inputs:
       packer_log:
@@ -25,16 +25,15 @@ jobs:
     name: build
 
     steps:
-      - name: checkout repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: config aws creds
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-access-key-id:     ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-2
-          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region:            us-east-2
+          role-to-assume:        ${{ secrets.AWS_ROLE_TO_ASSUME }}
 
       - name: verify aws session manager plugin
         run: session-manager-plugin --version
@@ -55,7 +54,7 @@ jobs:
         working-directory: ./packer
         env:
           PACKER_GITHUB_API_TOKEN: ${{ github.token }}
-          PACKER_LOG: ${{ github.event.inputs.packer_log }}
-          PKR_VAR_github_branch: ${{ github.ref_name }}
-          PKR_VAR_github_repo: ${{ github.repository }}
+          PACKER_LOG:              ${{ github.event.inputs.packer_log }}
+          PKR_VAR_github_branch:   ${{ github.ref_name }}
+          PKR_VAR_github_repo:     ${{ github.repository }}
           PKR_VAR_skip_create_ami: ${{ github.event.inputs.skip_create_ami }}
