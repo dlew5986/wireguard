@@ -39,12 +39,7 @@ source "amazon-ebs" "wireguard" {
   instance_type = "t2.micro"
   region        = "us-east-2"
 
-  temporary_security_group_source_public_ip = true
-
   skip_create_ami = var.skip_create_ami
-
-  communicator = "ssh"
-  ssh_username = "ec2-user"
 
   source_ami_filter {
     filters     = { name = "amzn2-ami-kernel-5.10-hvm-2.0.*-x86_64-gp2" }
@@ -64,6 +59,56 @@ source "amazon-ebs" "wireguard" {
   run_volume_tags = local.tags
   snapshot_tags   = local.tags
 
+  communicator  = "ssh"
+  ssh_interface = "session_manager"
+  ssh_username  = "ec2-user"
+
+  temporary_iam_instance_profile_policy_document {
+    Version = "2012-10-17"
+    Statement {
+      Effect = "Allow"
+      Action = [
+        "ssm:DescribeAssociation",
+        "ssm:GetDeployablePatchSnapshotForInstance",
+        "ssm:GetDocument",
+        "ssm:DescribeDocument",
+        "ssm:GetManifest",
+        "ssm:GetParameter",
+        "ssm:GetParameters",
+        "ssm:ListAssociations",
+        "ssm:ListInstanceAssociations",
+        "ssm:PutInventory",
+        "ssm:PutComplianceItems",
+        "ssm:PutConfigurePackageResult",
+        "ssm:UpdateAssociationStatus",
+        "ssm:UpdateInstanceAssociationStatus",
+        "ssm:UpdateInstanceInformation"
+      ]
+      Resource = ["*"]
+    }
+    Statement {
+      Effect = "Allow"
+      Action = [
+        "ssmmessages:CreateControlChannel",
+        "ssmmessages:CreateDataChannel",
+        "ssmmessages:OpenControlChannel",
+        "ssmmessages:OpenDataChannel"
+      ]
+      Resource = ["*"]
+    }
+    Statement {
+      Effect = "Allow"
+      Action = [
+        "ec2messages:AcknowledgeMessage",
+        "ec2messages:DeleteMessage",
+        "ec2messages:FailMessage",
+        "ec2messages:GetEndpoint",
+        "ec2messages:GetMessages",
+        "ec2messages:SendReply"
+      ]
+      Resource = ["*"]
+    }
+  }
 }
 
 build {
