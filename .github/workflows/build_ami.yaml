@@ -13,6 +13,11 @@ on:    # yamllint disable-line rule:truthy
           - 1
       skip_create_ami:
         type: boolean
+      debug:
+        type: boolean
+      on_error_abort:
+        description: on-error=abort
+        type: boolean
 
 jobs:
   build_ami:
@@ -39,7 +44,14 @@ jobs:
           packer --version
           packer init .
           packer validate .
-          packer build .
+          params=()
+          if [[ ${{ github.event.inputs.debug }} == true ]]; then
+            params+=(-debug)
+          fi
+          if [[ ${{ github.event.inputs.on_error_abort }} == true ]]; then
+            params+=(-on-error=abort)
+          fi
+          packer build "${params[@]}" .
         working-directory: ./packer
         env:
           PACKER_GITHUB_API_TOKEN: ${{ github.token }}
