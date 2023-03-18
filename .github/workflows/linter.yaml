@@ -1,15 +1,14 @@
 ---
 name: linter
 
-on: [pull_request, workflow_dispatch]    # yamllint disable-line rule:truthy
+on: [pull_request, workflow_dispatch]
 
 jobs:
   packer_fmt:
     runs-on: ubuntu-latest
     name: packer fmt
     steps:
-      - name: checkout repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: packer fmt
         run: |
@@ -21,8 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     name: terraform fmt
     steps:
-      - name: checkout repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: terraform fmt
         run: |
@@ -34,11 +32,10 @@ jobs:
     runs-on: ubuntu-latest
     name: yamllint
     steps:
-      - name: checkout repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: yamllint
         run: |
           yamllint --version
-          yamllint --strict .
-        working-directory: ./.github/workflows
+          yamllint --list-files ./.github/workflows
+          yamllint --strict ./.github/workflows
