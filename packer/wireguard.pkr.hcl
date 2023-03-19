@@ -7,6 +7,14 @@ packer {
   }
 }
 
+variable "aws_region_to_build_in" {
+  type = string
+}
+
+variable "aws_role_to_assume" {
+  type = string
+}
+
 variable "github_branch" {
   type = string
 }
@@ -35,11 +43,16 @@ locals {
 }
 
 source "amazon-ebs" "wireguard" {
-  ami_name      = local.ami_name
-  instance_type = "t2.micro"
-  region        = "us-east-2"
-
+  ami_name        = local.ami_name
+  instance_type   = "t2.micro"
+  region          = var.aws_region_to_build_in
   skip_create_ami = var.skip_create_ami
+
+  assume_role {
+    role_arn     = var.aws_role_to_assume
+    session_name = "packer"
+    external_id  = "packer"
+  }
 
   source_ami_filter {
     filters     = { name = "amzn2-ami-kernel-5.10-hvm-2.0.*-x86_64-gp2" }
