@@ -24,7 +24,7 @@ on:
 jobs:
   build_ami:
     runs-on: ubuntu-latest
-    name: build
+    name: build ami
     env:
       AWS_DEFAULT_REGION:    us-east-2
       AWS_REGION:            us-east-2
@@ -37,24 +37,19 @@ jobs:
 
       - uses: actions/checkout@v3
 
-      - name: packer build
+      - name: versions
         run: |
           echo "packer $(packer --version)"
           echo "session-manager-plugin $(session-manager-plugin --version)"
-          packer init .
-          packer validate .
-          params=()
-          if [[ ${{ github.event.inputs.debug }} == true ]]; then
-            params+=(-debug)
-          fi
-          if [[ ${{ github.event.inputs.on_error_abort }} == true ]]; then
-            params+=(-on-error=abort)
-          fi
-          packer build "${params[@]}" .
+
+      - name: packer build
+        run: ./build.sh
         working-directory: ./packer
         env:
+          PACKER_DEBUG:                   ${{ github.event.inputs.debug }}
           PACKER_GITHUB_API_TOKEN:        ${{ github.token }}
           PACKER_LOG:                     ${{ github.event.inputs.packer_log }}
+          PACKER_ON_ERROR_ABORT:          ${{ github.event.inputs.on_error_abort }}
           PKR_VAR_aws_region_to_build_in: ${{ env.AWS_REGION }}
           PKR_VAR_aws_role_to_assume:     ${{ secrets.AWS_ROLE_TO_ASSUME }}
           PKR_VAR_github_branch:          ${{ github.ref_name }}
