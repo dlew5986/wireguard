@@ -32,8 +32,8 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     steps:
-      - uses: crazy-max/ghaction-dump-context@v2
-        if: github.event.inputs.dump_context == true
+      - uses: crazy-max/ghaction-dump-context@v1
+        #if: github.event.inputs.dump_context == true
 
       - uses: actions/checkout@v3
 
