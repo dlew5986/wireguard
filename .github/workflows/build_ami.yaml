@@ -18,8 +18,6 @@ on:
       on_error_abort:
         description: on-error=abort
         type: boolean
-      dump_context:
-        type: boolean
 
 jobs:
   build_ami:
@@ -32,8 +30,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     steps:
-      - uses: crazy-max/ghaction-dump-context@v2
-        if: github.event.inputs.dump_context == true
+      - uses: crazy-max/ghaction-dump-context@v1
 
       - uses: actions/checkout@v3
 
